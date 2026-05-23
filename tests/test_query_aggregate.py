@@ -55,6 +55,21 @@ class TestQueryAggregate:
         )
         assert result == 95000.0
 
+    def test_aggregate_min(self):
+        """Test that min() returns the smallest value across all rows."""
+        result = _query().aggregate().min("salary")
+        assert result == 70000.0
+
+    def test_aggregate_min_filtered(self):
+        """Test that min() respects an active filter."""
+        result = (
+            _query()
+            .equals("department", "Engineering")
+            .aggregate()
+            .min("salary")
+        )
+        assert result == 85000.0
+
     def test_aggregate_count_by_after_filter(self):
         result = (
             _query()
