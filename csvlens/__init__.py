@@ -1,21 +1,22 @@
-"""csvlens-py: stream and lazily query large CSV files.
-
-Modules:
-    reader: Core CSV reading with lazy/streaming support via CSVReader.
-    filter: Row-level filtering logic via RowFilter.
-    query: High-level query interface via CSVQuery.
-
-Typical usage::
-
-    from csvlens import CSVQuery
-
-    with CSVQuery("data.csv") as q:
-        results = q.where("age > 30").select(["name", "age"]).fetch()
-"""
-
+"""csvlens-py public API."""
 from csvlens.reader import CSVReader
-from csvlens.filter import RowFilter
 from csvlens.query import CSVQuery
+from csvlens.filter import RowFilter
+from csvlens.sorter import CSVSorter
+from csvlens.paginator import CSVPaginator
+from csvlens.exporter import CSVExporter
+from csvlens.aggregator import CSVAggregator
+from csvlens.transformer import CSVTransformer
+from csvlens.joiner import CSVJoiner
 
-__all__ = ["CSVReader", "RowFilter", "CSVQuery"]
-__version__ = "0.2.0"
+__all__ = [
+    "CSVReader",
+    "CSVQuery",
+    "RowFilter",
+    "CSVSorter",
+    "CSVPaginator",
+    "CSVExporter",
+    "CSVAggregator",
+    "CSVTransformer",
+    "CSVJoiner",
+]
