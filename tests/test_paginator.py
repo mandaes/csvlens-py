@@ -92,6 +92,18 @@ class TestCSVPaginatorBasic:
         list(p.pages())
         assert p.total_loaded() == 7
 
+    def test_negative_page_number_raises(self):
+        p = CSVPaginator(_rows(), page_size=3)
+        with pytest.raises(ValueError):
+            p.get_page(-1)
+
+    def test_page_size_one(self):
+        """Ensure page_size=1 returns exactly one row per page."""
+        p = CSVPaginator(_rows(), page_size=1)
+        assert len(p.get_page(1)) == 1
+        assert len(p.get_page(7)) == 1
+        assert p.get_page(8) == []
+
 
 class TestQueryPaginate:
     def test_paginate_returns_paginator(self):
@@ -107,5 +119,4 @@ class TestQueryPaginate:
     def test_paginate_sorted(self):
         p = _query().order_by("name", ascending=True).paginate(page_size=3)
         page = p.get_page(1)
-        assert page[0]["name"] == "Alice"
-        assert page[1]["name"] == "Bob"
+        assert page[0][
